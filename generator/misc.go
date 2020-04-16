@@ -27,6 +27,14 @@ func generateItems(prefix string, qtty int) []string {
 	return result
 }
 
+func generateVersion(prefix string, qtty int) []string {
+	result := []string{}
+	for i := 1; i <= qtty; i++ {
+		result = append(result, fmt.Sprintf("%s%d", prefix, i))
+	}
+	return result
+}
+
 func randomRangeNormal(min int, max int) int {
 	median := float64((max - min) / 2)
 	v := generateSample(median+0.5, median/3)

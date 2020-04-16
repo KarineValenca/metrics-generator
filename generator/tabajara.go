@@ -80,14 +80,15 @@ func (gen *Tabajara) FillMetrics() {
 
 	uri := getRandomElemNormal(gen.getUris())
 	name := getRandomElemNormal(gen.getServiceNames())
+	version := getRandomElemNormal(gen.getVersions())
 	calls := int(gen.getValueAccident(accidenttypes.Calls, accidenttypes.DefaultNumberOfCalls, uri))
 
 	for i := 0; i < calls; i++ {
 		method := methods[randomInt(int64(hash(uri)), len(methods))]
 		status, isError := getStatusWithErrorAccident(gen.getValueAccident(accidenttypes.ErrorRate, accidenttypes.DefaultErrorRate, uri))
 
-		gen.FillRequests(uri, method, status, "0.0.1", isError)
-		gen.FillResponses(uri, method, status, "0.0.1", isError)
+		gen.FillRequests(uri, method, status, version, isError)
+		gen.FillResponses(uri, method, status, version, isError)
 	}
 
 	gen.FillDependencies(name)
@@ -140,4 +141,8 @@ func (gen *Tabajara) getValueAccident(accidentType string, defaultValue float64,
 		return accident.Value
 	}
 	return defaultValue
+}
+
+func (getn *Tabajara) getVersions() []string {
+	return generateVersion("0.0.", 4)
 }
